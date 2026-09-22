@@ -1,11 +1,7 @@
-using UnityEngine;
 public static class Missions{
- public static string Get(GameData d){
-  if(d.population<180)return "Mission: Reach 180 population.";
-  if(d.happiness<75)return "Mission: Reach 75% happiness.";
-  if(d.level<5)return "Mission: Reach Level 5.";
-  if(d.food<300)return "Mission: Store 300 food.";
-  return "Mission: Build every district.";
- }
- public static bool Complete(GameData d){return d.population>=180&&d.happiness>=75&&d.level>=5&&d.food>=300;}
+ public static readonly string[] Titles={"First Foundations","Knowledge & Health","Powering Growth","Prosperity","Green City","Grand City"};
+ public static readonly string[] Goals={"Build Homes and Farm; reach 160 population.","Build School and Hospital; reach 70 happiness.","Build Solar Plant and Water Plant; keep food and energy positive.","Build Market, Factory and Transport; reach 250 population and 10000 money.","Build Park and Research Lab; reach 80 happiness and Level 7.","Build Stadium and all districts; reach Level 10."};
+ public static bool CompleteCurrent(GameData d){switch(d.chapter){case 1:return d.buildings[0].level>0&&d.buildings[1].level>0&&d.population>=160;case 2:return d.buildings[2].level>0&&d.buildings[4].level>0&&d.happiness>=70;case 3:return d.buildings[3].level>0&&d.buildings[8].level>0&&d.food>0&&d.energy>0;case 4:return d.buildings[5].level>0&&d.buildings[6].level>0&&d.buildings[9].level>0&&d.population>=250&&d.money>=10000;case 5:return d.buildings[7].level>0&&d.buildings[10].level>0&&d.happiness>=80&&d.level>=7;case 6:return d.totalBuilt>=12&&d.level>=10;default:return false;}}
+ public static string Get(GameData d){if(d.cityComplete)return "FINALE COMPLETE — Free Build unlocked.";return "Chapter "+d.chapter+" — "+Titles[d.chapter-1]+"\n"+Goals[d.chapter-1];}
+ public static void Advance(GameData d){if(!CompleteCurrent(d))return;if(d.chapter<6){d.chapter++;d.missionIndex=0;}else if(d.totalBuilt>=12&&d.level>=10){d.cityComplete=true;d.freeBuild=true;}}
 }

@@ -1,11 +1,4 @@
 using UnityEngine;
 public static class CityEvents{
- public static string Apply(GameData d){
-  int roll=Random.Range(0,100);
-  if(roll<12){d.money+=700;d.happiness=Mathf.Clamp(d.happiness+5,0,100);return "Festival season! Tourism brought 700 and happiness increased.";}
-  if(roll<24){d.food=Mathf.Max(0,d.food-35);d.money=Mathf.Max(0,d.money-250);return "Supply disruption. Food and emergency funds were used.";}
-  if(roll<34){d.energy+=40;d.money+=250;return "Solar breakthrough! Energy +40 and grant +250.";}
-  if(roll<42){d.population+=8;d.happiness=Mathf.Clamp(d.happiness+3,0,100);return "New families arrived. Population +8.";}
-  return "A calm year. Your city continues to grow.";
- }
+ public static string Apply(GameData d){d.eventSeed=(d.eventSeed*1103515245+12345)&0x7fffffff;int r=d.eventSeed%100;if(r<10){d.money+=700;d.happiness=Mathf.Clamp(d.happiness+5,0,100);return "Festival season: tourism grant +700 money, happiness +5.";}if(r<20){d.food=Mathf.Max(0,d.food-35);d.money=Mathf.Max(0,d.money-250);return "Supply disruption: food -35, emergency cost 250.";}if(r<30){d.energy+=40;d.money+=250;return "Solar breakthrough: energy +40, grant +250.";}if(r<40){d.population+=8;d.happiness=Mathf.Clamp(d.happiness+3,0,100);return "New families arrived: population +8.";}if(r<50){d.food+=70;return "Good monsoon: food +70.";}if(r<60){d.energy=Mathf.Max(0,d.energy-30);return "Heatwave: energy -30.";}if(r<70){d.money+=450;d.xp+=50;return "Education grant: money +450, XP +50.";}if(r<80){d.money+=900;d.happiness=Mathf.Clamp(d.happiness+4,0,100);return "Trade boom: money +900, happiness +4.";}if(r<90){d.energy=Mathf.Max(0,d.energy-20);return "Maintenance outage: energy -20.";}d.xp+=150;d.happiness=Mathf.Clamp(d.happiness+6,0,100);return "Research discovery: XP +150, happiness +6.";}
 }
