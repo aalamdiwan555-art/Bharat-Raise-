@@ -1,0 +1,1 @@
+using UnityEngine;public class BharatRiseBootstrap:MonoBehaviour{void Awake(){if(FindObjectOfType<BharatRiseGame>()==null)new GameObject("BharatRiseGame").AddComponent<BharatRiseGame>();}}
